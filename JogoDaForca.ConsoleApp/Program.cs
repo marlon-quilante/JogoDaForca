@@ -22,18 +22,92 @@
 
                 do
                 {
-                    string dicaDaPalavra = String.Join(" ", letrasEncontradas);
-
                     Console.Clear();
+                    string palavra = String.Join(" ", letrasEncontradas);
+
                     Console.WriteLine("----------------------------");
                     Console.WriteLine("Jogo da Forca");
                     Console.WriteLine("----------------------------");
-                    Console.WriteLine("Palavra secreta: " + dicaDaPalavra);
+                    Console.WriteLine("Palavra secreta: " + palavra);
                     Console.WriteLine("----------------------------");
                     Console.WriteLine("Erros: " + quantidadeErros);
                     Console.WriteLine("----------------------------");
 
-                    Console.Write("Digite uma letra: ");
+                    if (quantidadeErros == 0)
+                    {
+                        Console.WriteLine("___________        ");
+                        Console.WriteLine("|/        |        ");
+                        Console.WriteLine("|                  ");
+                        Console.WriteLine("|                  ");
+                        Console.WriteLine(@"|                 ");
+                        Console.WriteLine(@"|                 ");
+                        Console.WriteLine(@"|                 ");
+                        Console.WriteLine(@"|                 ");
+                        Console.WriteLine("|____              ");
+                    }
+
+                    else if (quantidadeErros == 1)
+                    {
+                        Console.WriteLine("___________        ");
+                        Console.WriteLine("|/        |        ");
+                        Console.WriteLine("|        (_)       ");
+                        Console.WriteLine("|                  ");
+                        Console.WriteLine(@"|                  ");
+                        Console.WriteLine(@"|                  ");
+                        Console.WriteLine(@"|                  ");
+                        Console.WriteLine(@"|                  ");
+                        Console.WriteLine("|____              ");
+                    }
+                    else if (quantidadeErros == 2)
+                    {
+                        Console.WriteLine("___________        ");
+                        Console.WriteLine("|/        |        ");
+                        Console.WriteLine("|        (_)       ");
+                        Console.WriteLine("|         |        ");
+                        Console.WriteLine(@"|         |       ");
+                        Console.WriteLine(@"|         |       ");
+                        Console.WriteLine(@"|                 ");
+                        Console.WriteLine(@"|                 ");
+                        Console.WriteLine("|____              ");
+                    }
+                    else if (quantidadeErros == 3)
+                    {
+                        Console.WriteLine("___________        ");
+                        Console.WriteLine("|/        |        ");
+                        Console.WriteLine("|        (_)       ");
+                        Console.WriteLine("|         |        ");
+                        Console.WriteLine(@"|         |\       ");
+                        Console.WriteLine(@"|         | \      ");
+                        Console.WriteLine(@"|                  ");
+                        Console.WriteLine(@"|                  ");
+                        Console.WriteLine("|____              ");
+                    }
+                    else if (quantidadeErros == 4)
+                    {
+                        Console.WriteLine("___________        ");
+                        Console.WriteLine("|/        |        ");
+                        Console.WriteLine("|        (_)       ");
+                        Console.WriteLine("|         |        ");
+                        Console.WriteLine(@"|        /|\       ");
+                        Console.WriteLine(@"|       / | \      ");
+                        Console.WriteLine(@"|                  ");
+                        Console.WriteLine(@"|                  ");
+                        Console.WriteLine("|____              ");
+                    }
+                    else if (quantidadeErros == 5)
+                    {
+                        Console.WriteLine("___________        ");
+                        Console.WriteLine("|/        |        ");
+                        Console.WriteLine("|        (_)       ");
+                        Console.WriteLine("|         |        ");
+                        Console.WriteLine(@"|        /|\       ");
+                        Console.WriteLine(@"|       / | \      ");
+                        Console.WriteLine(@"|        /         ");
+                        Console.WriteLine(@"|       /          ");
+                        Console.WriteLine("|____              ");
+                    }
+
+                    Console.Write("\nDigite uma letra: ");
                     char chute = Console.ReadLine()[0]; //obtém apenas um caracter do que o usuário digita
                     Console.WriteLine(chute);
 
@@ -51,29 +125,39 @@
                     }
 
                     if (letraFoiEncontrada == false)
+                    {
                         quantidadeErros++;
 
-                    dicaDaPalavra = String.Join("", letrasEncontradas);
+                    }
 
-                    jogadorAcertou = dicaDaPalavra == palavraSecreta;
+                    palavra = String.Join("", letrasEncontradas);
+
+                    jogadorAcertou = palavra == palavraSecreta;
                     jogadorEnforcou = quantidadeErros > 5;
 
                     if (jogadorAcertou)
                     {
-                        Console.Clear();
                         Console.WriteLine("----------------------------");
                         Console.WriteLine("Você acertou a palavra secreta! Era: " + palavraSecreta);
                         Console.WriteLine("----------------------------");
                     } else if (jogadorEnforcou)
                     {
                         Console.Clear();
-                        Console.WriteLine("----------------------------");
+                        Console.WriteLine("___________        ");
+                        Console.WriteLine("|/        |        ");
+                        Console.WriteLine("|        (_)       ");
+                        Console.WriteLine("|         |        ");
+                        Console.WriteLine(@"|        /|\       ");
+                        Console.WriteLine(@"|       / | \      ");
+                        Console.WriteLine(@"|        / \       ");
+                        Console.WriteLine(@"|       /   \      ");
+                        Console.WriteLine("|____              ");
+                        Console.WriteLine("\n----------------------------");
                         Console.WriteLine("Que azar, tente novamente! A palavra era: " + palavraSecreta);
                         Console.WriteLine("----------------------------");
                     }
 
                 } while (jogadorAcertou == false && jogadorEnforcou == false);
-
                 Console.ReadLine();
             }
         }
