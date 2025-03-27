@@ -6,14 +6,7 @@
         {
             while (true)
             {
-                string palavraSecreta = "UVA";
-
-                char[] letrasEncontradas = new char[palavraSecreta.Length];
-
-                for (int caractere = 0; caractere < letrasEncontradas.Length; caractere++)
-                {
-                    letrasEncontradas[caractere] = '_';
-                }
+                string palavraSecreta = "";
 
                 int quantidadeErros = 0;
                 int tentativa = 0;
@@ -23,20 +16,83 @@
                 bool letraRepetida = false;
 
                 char[] letrasChutadas = new char[26];
-                char chute;
+
+                string[] frutas = {
+                        "ABACAXI", "ACEROLA", "AMEIXA", "BANANA", "CAJU",
+                        "CARAMBOLA", "CEREJA", "COCO", "DAMASCO", "FIGO",
+                        "GOIABA", "JABUTICABA", "KIWI", "LARANJA", "LIMAO",
+                        "MACA", "MAMAO", "MANGA", "MARACUJA", "MELANCIA" };
+
+                string[] animais = {
+                        "ABELHA", "ARARA", "CACHORRO", "CAMELO", "CAVALO",
+                        "COBRA", "ELEFANTE", "ESQUILO", "GALO", "GATO",
+                        "GIRAFA", "JACARE", "LEAO", "LOBO", "MACACO",
+                        "ONCA", "PATO", "PEIXE", "TIGRE", "TUCANO" };
+
+                string[] paises = {
+                        "ALEMANHA", "ARGENTINA", "AUSTRALIA", "BRASIL", "CANADA",
+                        "CHILE", "CHINA", "COLOMBIA", "EGITO", "ESPANHA",
+                        "FINLANDIA", "FRANCA", "INDIA", "ITALIA", "JAPAO",
+                        "MEXICO", "PORTUGAL", "RUSSIA", "SUECIA", "URUGUAI" };
+
+                Console.Clear();
+                Console.WriteLine("----------------------------");
+                Console.WriteLine("Jogo da Forca");
+                Console.WriteLine("----------------------------");
+                Console.WriteLine("Escolha uma categoria...\n");
+                Console.WriteLine("1- Frutas");
+                Console.WriteLine("2- Animais");
+                Console.WriteLine("3- Países\n");
+
+                string categoria = Console.ReadLine();
+
+                Random sorteador = new Random();
+                int indicePalavraSorteada = sorteador.Next(0,20);
+
+                if (categoria == "1")
+                {
+                    palavraSecreta = frutas[indicePalavraSorteada];
+                    categoria = "Frutas";
+                }
+                else if (categoria == "2")
+                {
+                    palavraSecreta = animais[indicePalavraSorteada];
+                    categoria = "Animais";
+                }
+                else if (categoria == "3")
+                {
+                    palavraSecreta = paises[indicePalavraSorteada];
+                    categoria = "Países";
+                }
+                else
+                {
+                    Console.WriteLine("Opção inválida!");
+                    Console.ReadLine();
+                    continue;
+                }
+
+                char[] letrasEncontradas = new char[palavraSecreta.Length];
+
+                for (int caractere = 0; caractere < letrasEncontradas.Length; caractere++)
+                {
+                    letrasEncontradas[caractere] = '_';
+                }
 
                 do
                 {
                     Console.Clear();
                     string palavra = String.Join(" ", letrasEncontradas);
+                    char chute;
 
                     Console.WriteLine("----------------------------");
                     Console.WriteLine("Jogo da Forca");
                     Console.WriteLine("----------------------------");
+                    Console.WriteLine("Categoria: " + categoria);
+                    Console.WriteLine("----------------------------");
                     Console.WriteLine("Erros: " + quantidadeErros);
                     Console.WriteLine("----------------------------");
                     Console.Write("Letras chutadas: ");
-                    
+
                     for (int i = 0; i < letrasChutadas.Length; i++)
                     {
                         if (letrasChutadas[i] != '\0')
@@ -126,21 +182,25 @@
 
                     letraRepetida = false;
                     Console.Write("\nDigite uma letra: ");
-                    chute = Console.ReadLine()[0]; //obtém apenas um caracter do que o usuário digita
+                    string chutePalavra = Console.ReadLine(); //obtém apenas um caracter do que o usuário digita
 
-                    for (int i = 0; i < letrasChutadas.Length; i++)
+                    bool palavraFoiEncontrada = false;
+
+                    if (chutePalavra.Length > 1)
                     {
-                        if (chute == letrasChutadas[i])
+                        if (chutePalavra == palavraSecreta)
                         {
-                            letraRepetida = true;
-                            break;
+                            palavraFoiEncontrada = true;
+                        }
+
+                        if (palavraFoiEncontrada == false)
+                        {
+                            quantidadeErros++;
                         }
                     }
-
-                    while (letraRepetida == true)
+                    else
                     {
-                        Console.Write("\nVocê já chutou essa! Digite outra letra: ");
-                        chute = Console.ReadLine()[0];
+                        chute = chutePalavra[0];
 
                         for (int i = 0; i < letrasChutadas.Length; i++)
                         {
@@ -148,34 +208,51 @@
                             {
                                 letraRepetida = true;
                                 break;
-                            } else
-                            {
-                                letraRepetida = false;
                             }
                         }
-                    }
 
-                    bool letraFoiEncontrada = false;
-
-                    for (int contador = 0; contador < palavraSecreta.Length; contador++)
-                    {
-                        char letraAtual = palavraSecreta[contador];
-
-                        if (chute == letraAtual)
+                        while (letraRepetida == true)
                         {
-                            letrasEncontradas[contador] = letraAtual;
-                            letraFoiEncontrada = true;
+                            Console.Write("\nVocê já chutou essa! Digite outra letra: ");
+                            chute = Console.ReadLine()[0];
+
+                            for (int i = 0; i < letrasChutadas.Length; i++)
+                            {
+                                if (chute == letrasChutadas[i])
+                                {
+                                    letraRepetida = true;
+                                    break;
+                                }
+                                else
+                                {
+                                    letraRepetida = false;
+                                }
+                            }
                         }
+
+                        bool letraFoiEncontrada = false;
+
+                        for (int contador = 0; contador < palavraSecreta.Length; contador++)
+                        {
+                            char letraAtual = palavraSecreta[contador];
+
+                            if (chute == letraAtual)
+                            {
+                                letrasEncontradas[contador] = letraAtual;
+                                letraFoiEncontrada = true;
+                            }
+                        }
+
+                        if (letraFoiEncontrada == false)
+                        {
+                            quantidadeErros++;
+                        }
+
+                        palavra = String.Join("", letrasEncontradas);
+                        letrasChutadas[tentativa] = chute;
                     }
 
-                    if (letraFoiEncontrada == false)
-                    {
-                        quantidadeErros++;
-                    }
-
-                    palavra = String.Join("", letrasEncontradas);
-
-                    jogadorAcertou = palavra == palavraSecreta;
+                    jogadorAcertou = palavra == palavraSecreta || palavraFoiEncontrada == true;
                     jogadorEnforcou = quantidadeErros > 5;
 
                     if (jogadorAcertou)
@@ -198,16 +275,15 @@
                         Console.WriteLine(@"|       /   \      ");
                         Console.WriteLine("|____              ");
                         Console.WriteLine("\n----------------------------");
-                        Console.WriteLine("Que azar, tente novamente! A palavra era: " + palavraSecreta);
+                        Console.WriteLine("Você perdeu! A palavra era: " + palavraSecreta);
                         Console.WriteLine("----------------------------");
                     }
 
-                    letrasChutadas[tentativa] = chute;
                     tentativa++;
 
                 } while (jogadorAcertou == false && jogadorEnforcou == false);
 
-                Console.Write("Pressione qualquer tecla para jogar novamente...");
+                Console.Write("\nPressione qualquer tecla para jogar novamente...");
                 Console.ReadLine();
             }
         }
