@@ -30,10 +30,26 @@
                         "ONCA", "PATO", "PEIXE", "TIGRE", "TUCANO" };
 
                 string[] paises = {
-                        "ALEMANHA", "ARGENTINA", "AUSTRALIA", "BRASIL", "CANADA",
+                        "ALEMANHA", "NIGERIA", "AUSTRALIA", "BRASIL", "CANADA",
                         "CHILE", "CHINA", "COLOMBIA", "EGITO", "ESPANHA",
                         "FINLANDIA", "FRANCA", "INDIA", "ITALIA", "JAPAO",
-                        "MEXICO", "PORTUGAL", "RUSSIA", "SUECIA", "URUGUAI" };
+                        "VENEZUELA", "PORTUGAL", "RUSSIA", "SUECIA", "URUGUAI" };
+
+                string[] bandas =
+                {
+                    "ANGRA", "AVENGEDSEVENFOLD", "BLACKSABBATH", "BLINDGUARDIAN", "BONJOVI",
+                    "DISTURBED", "EDSHEERAN", "ELVIS", "EVANESCENCE", "IRONMAIDEN",
+                    "LINKINPARK", "LVCAS", "METALLICA", "MILEYCYRUS", "OZZY",
+                    "PEARLJAM", "PINKFLOYD", "RHCP", "RUSH", "SLIPKNOT"
+                };
+
+                string[] games =
+                {
+                    "AMNESIA", "BIOSHOCK", "BULLY", "CALLOFDUTY", "DETROIT",
+                    "FNAF", "GODOFWAR", "GTA", "LEAGUEOFLEGENDS", "LIFEISSTRANGE",
+                    "MAXPAYNE", "NEEDFORSPEED", "OUTLAST", "PAPERSPLEASE", "REDDEADREDEMPTION",
+                    "RESIDENTEVIL", "THELASTOFUS", "TOMBRAIDER", "UNCHARTED", "UNDERTALE"
+                };
 
                 Console.Clear();
                 Console.WriteLine("----------------------------");
@@ -42,12 +58,14 @@
                 Console.WriteLine("Escolha uma categoria...\n");
                 Console.WriteLine("1- Frutas");
                 Console.WriteLine("2- Animais");
-                Console.WriteLine("3- Países\n");
+                Console.WriteLine("3- Países");
+                Console.WriteLine("4- Bandas");
+                Console.WriteLine("5- Games\n");
 
                 string categoria = Console.ReadLine();
 
                 Random sorteador = new Random();
-                int indicePalavraSorteada = sorteador.Next(0,20);
+                int indicePalavraSorteada = sorteador.Next(0, 20);
 
                 if (categoria == "1")
                 {
@@ -63,6 +81,16 @@
                 {
                     palavraSecreta = paises[indicePalavraSorteada];
                     categoria = "Países";
+                }
+                else if (categoria == "4")
+                {
+                    palavraSecreta = bandas[indicePalavraSorteada];
+                    categoria = "Bandas";
+                }
+                else if (categoria == "5")
+                {
+                    palavraSecreta = games[indicePalavraSorteada];
+                    categoria = "Games";
                 }
                 else
                 {
