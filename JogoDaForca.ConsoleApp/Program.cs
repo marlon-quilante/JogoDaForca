@@ -6,314 +6,163 @@
         {
             while (true)
             {
-                string palavraSecreta = "";
+                Jogo jogo = new Jogo();
+                Forca forca = new Forca();
+                Categoria categoria = new Categoria();
 
-                int quantidadeErros = 0;
-                int tentativa = 0;
+                ApresentarCabecalhoInicial();
+                MenuCategorias();
+                EscolherCategoria(categoria);
 
-                bool jogadorEnforcou = false;
-                bool jogadorAcertou = false;
-                bool letraRepetida = false;
+                jogo.SortearPalavra(categoria);
+                jogo.letrasChutadas = new char[500];
+                jogo.letrasEncontradas = new char[jogo.palavraSecreta.Length];
 
-                char[] letrasChutadas = new char[26];
-
-                string[] frutas = {
-                        "ABACAXI", "ACEROLA", "AMEIXA", "BANANA", "CAJU",
-                        "CARAMBOLA", "CEREJA", "COCO", "DAMASCO", "FIGO",
-                        "GOIABA", "JABUTICABA", "KIWI", "LARANJA", "LIMAO",
-                        "MACA", "MAMAO", "MANGA", "MARACUJA", "MELANCIA" };
-
-                string[] animais = {
-                        "ABELHA", "ARARA", "CACHORRO", "CAMELO", "CAVALO",
-                        "COBRA", "ELEFANTE", "ESQUILO", "GALO", "GATO",
-                        "GIRAFA", "JACARE", "LEAO", "LOBO", "MACACO",
-                        "ONCA", "PATO", "PEIXE", "TIGRE", "TUCANO" };
-
-                string[] paises = {
-                        "ALEMANHA", "NIGERIA", "AUSTRALIA", "BRASIL", "CANADA",
-                        "CHILE", "CHINA", "COLOMBIA", "EGITO", "ESPANHA",
-                        "FINLANDIA", "FRANCA", "INDIA", "ITALIA", "JAPAO",
-                        "VENEZUELA", "PORTUGAL", "RUSSIA", "SUECIA", "URUGUAI" };
-
-                string[] bandas =
+                while (true)
                 {
-                    "ANGRA", "AVENGEDSEVENFOLD", "BLACKSABBATH", "BLINDGUARDIAN", "BONJOVI",
-                    "DISTURBED", "EDSHEERAN", "ELVIS", "EVANESCENCE", "IRONMAIDEN",
-                    "LINKINPARK", "LVCAS", "METALLICA", "MILEYCYRUS", "OZZY",
-                    "PEARLJAM", "PINKFLOYD", "RHCP", "RUSH", "SLIPKNOT"
-                };
-
-                string[] games =
-                {
-                    "AMNESIA", "BIOSHOCK", "BULLY", "CALLOFDUTY", "DETROIT",
-                    "FNAF", "GODOFWAR", "GTA", "LEAGUEOFLEGENDS", "LIFEISSTRANGE",
-                    "MAXPAYNE", "NEEDFORSPEED", "OUTLAST", "PAPERSPLEASE", "REDDEADREDEMPTION",
-                    "RESIDENTEVIL", "THELASTOFUS", "TOMBRAIDER", "UNCHARTED", "UNDERTALE"
-                };
-
-                Console.Clear();
-                Console.WriteLine("----------------------------");
-                Console.WriteLine("Jogo da Forca");
-                Console.WriteLine("----------------------------");
-                Console.WriteLine("Escolha uma categoria...\n");
-                Console.WriteLine("1- Frutas");
-                Console.WriteLine("2- Animais");
-                Console.WriteLine("3- Países");
-                Console.WriteLine("4- Bandas");
-                Console.WriteLine("5- Games\n");
-
-                string categoria = Console.ReadLine();
-
-                Random sorteador = new Random();
-                int indicePalavraSorteada = sorteador.Next(0, 20);
-
-                if (categoria == "1")
-                {
-                    palavraSecreta = frutas[indicePalavraSorteada];
-                    categoria = "Frutas";
+                    ApresentarCabecalhoInicial();
+                    ApresentarCabecalhoJogo(jogo, categoria);
+                    forca.Desenhar(jogo);
+                    string chute = Chute(jogo);
+                    jogo.VerificarChute(chute);
+                    if (jogo.JogadorAcertou(forca))
+                    {
+                        ApresentarMensagemVitoria(jogo);
+                        break;
+                    }
+                    else if (jogo.JogadorPerdeu(forca))
+                    {
+                        ApresentarMensagemDerrota(jogo, forca);
+                        break;
+                    }
                 }
-                else if (categoria == "2")
-                {
-                    palavraSecreta = animais[indicePalavraSorteada];
-                    categoria = "Animais";
-                }
-                else if (categoria == "3")
-                {
-                    palavraSecreta = paises[indicePalavraSorteada];
-                    categoria = "Países";
-                }
-                else if (categoria == "4")
-                {
-                    palavraSecreta = bandas[indicePalavraSorteada];
-                    categoria = "Bandas";
-                }
-                else if (categoria == "5")
-                {
-                    palavraSecreta = games[indicePalavraSorteada];
-                    categoria = "Games";
-                }
+
+                if (JogarNovamente())
+                    continue;
+                else
+                    break;
+            }
+
+        }
+
+        static void ApresentarCabecalhoInicial()
+        {
+            Console.Clear();
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("Jogo da Forca");
+            Console.WriteLine("----------------------------");
+        }
+
+        static void MenuCategorias()
+        {
+            Console.WriteLine("Escolha uma categoria...\n");
+            Console.WriteLine("1- Frutas");
+            Console.WriteLine("2- Animais");
+            Console.WriteLine("3- Países");
+            Console.WriteLine("4- Bandas");
+            Console.WriteLine("5- Games\n");
+        }
+
+        static void EscolherCategoria(Categoria categoria)
+        {
+            string opcaoCategoria = Console.ReadLine();
+
+            while (categoria.nome == "")
+            {
+                if (opcaoCategoria == "1")
+                    categoria.nome = "Frutas";
+                else if (opcaoCategoria == "2")
+                    categoria.nome = "Animais";
+                else if (opcaoCategoria == "3")
+                    categoria.nome = "Países";
+                else if (opcaoCategoria == "4")
+                    categoria.nome = "Bandas";
+                else if (opcaoCategoria == "5")
+                    categoria.nome = "Games";
                 else
                 {
-                    Console.WriteLine("Opção inválida!");
+                    Console.WriteLine("Opção inválida! Pressione ENTER e tente novamente...");
                     Console.ReadLine();
                     continue;
                 }
-
-                char[] letrasEncontradas = new char[palavraSecreta.Length];
-
-                for (int caractere = 0; caractere < letrasEncontradas.Length; caractere++)
-                {
-                    letrasEncontradas[caractere] = '_';
-                }
-
-                do
-                {
-                    Console.Clear();
-                    string palavra = String.Join(" ", letrasEncontradas);
-                    char chute;
-
-                    Console.WriteLine("----------------------------");
-                    Console.WriteLine("Jogo da Forca");
-                    Console.WriteLine("----------------------------");
-                    Console.WriteLine("Categoria: " + categoria);
-                    Console.WriteLine("----------------------------");
-                    Console.WriteLine("Erros: " + quantidadeErros);
-                    Console.WriteLine("----------------------------");
-                    Console.Write("Letras chutadas: ");
-
-                    for (int i = 0; i < letrasChutadas.Length; i++)
-                    {
-                        if (letrasChutadas[i] != '\0')
-                        {
-                            char letra = letrasChutadas[i];
-                            Console.Write(letra + " ");
-                        }
-                    }
-
-                    Console.WriteLine("\n----------------------------");
-                    Console.WriteLine("Palavra secreta: " + palavra);
-                    Console.WriteLine("----------------------------");
-
-                    if (quantidadeErros == 0)
-                    {
-                        Console.WriteLine("___________        ");
-                        Console.WriteLine("|/        |        ");
-                        Console.WriteLine("|                  ");
-                        Console.WriteLine("|                  ");
-                        Console.WriteLine(@"|                 ");
-                        Console.WriteLine(@"|                 ");
-                        Console.WriteLine(@"|                 ");
-                        Console.WriteLine(@"|                 ");
-                        Console.WriteLine("|____              ");
-                    }
-
-                    else if (quantidadeErros == 1)
-                    {
-                        Console.WriteLine("___________        ");
-                        Console.WriteLine("|/        |        ");
-                        Console.WriteLine("|        (_)       ");
-                        Console.WriteLine("|                  ");
-                        Console.WriteLine(@"|                  ");
-                        Console.WriteLine(@"|                  ");
-                        Console.WriteLine(@"|                  ");
-                        Console.WriteLine(@"|                  ");
-                        Console.WriteLine("|____              ");
-                    }
-                    else if (quantidadeErros == 2)
-                    {
-                        Console.WriteLine("___________        ");
-                        Console.WriteLine("|/        |        ");
-                        Console.WriteLine("|        (_)       ");
-                        Console.WriteLine("|         |        ");
-                        Console.WriteLine(@"|         |       ");
-                        Console.WriteLine(@"|         |       ");
-                        Console.WriteLine(@"|                 ");
-                        Console.WriteLine(@"|                 ");
-                        Console.WriteLine("|____              ");
-                    }
-                    else if (quantidadeErros == 3)
-                    {
-                        Console.WriteLine("___________        ");
-                        Console.WriteLine("|/        |        ");
-                        Console.WriteLine("|        (_)       ");
-                        Console.WriteLine("|         |        ");
-                        Console.WriteLine(@"|         |\       ");
-                        Console.WriteLine(@"|         | \      ");
-                        Console.WriteLine(@"|                  ");
-                        Console.WriteLine(@"|                  ");
-                        Console.WriteLine("|____              ");
-                    }
-                    else if (quantidadeErros == 4)
-                    {
-                        Console.WriteLine("___________        ");
-                        Console.WriteLine("|/        |        ");
-                        Console.WriteLine("|        (_)       ");
-                        Console.WriteLine("|         |        ");
-                        Console.WriteLine(@"|        /|\       ");
-                        Console.WriteLine(@"|       / | \      ");
-                        Console.WriteLine(@"|                  ");
-                        Console.WriteLine(@"|                  ");
-                        Console.WriteLine("|____              ");
-                    }
-                    else if (quantidadeErros == 5)
-                    {
-                        Console.WriteLine("___________        ");
-                        Console.WriteLine("|/        |        ");
-                        Console.WriteLine("|        (_)       ");
-                        Console.WriteLine("|         |        ");
-                        Console.WriteLine(@"|        /|\       ");
-                        Console.WriteLine(@"|       / | \      ");
-                        Console.WriteLine(@"|        /         ");
-                        Console.WriteLine(@"|       /          ");
-                        Console.WriteLine("|____              ");
-                    }
-
-                    letraRepetida = false;
-                    Console.Write("\nDigite uma letra: ");
-                    string chutePalavra = Console.ReadLine(); //obtém apenas um caracter do que o usuário digita
-
-                    bool palavraFoiEncontrada = false;
-
-                    if (chutePalavra.Length > 1)
-                    {
-                        if (chutePalavra == palavraSecreta)
-                        {
-                            palavraFoiEncontrada = true;
-                        }
-
-                        if (palavraFoiEncontrada == false)
-                        {
-                            quantidadeErros++;
-                        }
-                    }
-                    else
-                    {
-                        chute = chutePalavra[0];
-
-                        for (int i = 0; i < letrasChutadas.Length; i++)
-                        {
-                            if (chute == letrasChutadas[i])
-                            {
-                                letraRepetida = true;
-                                break;
-                            }
-                        }
-
-                        while (letraRepetida == true)
-                        {
-                            Console.Write("\nVocê já chutou essa! Digite outra letra: ");
-                            chute = Console.ReadLine()[0];
-
-                            for (int i = 0; i < letrasChutadas.Length; i++)
-                            {
-                                if (chute == letrasChutadas[i])
-                                {
-                                    letraRepetida = true;
-                                    break;
-                                }
-                                else
-                                {
-                                    letraRepetida = false;
-                                }
-                            }
-                        }
-
-                        bool letraFoiEncontrada = false;
-
-                        for (int contador = 0; contador < palavraSecreta.Length; contador++)
-                        {
-                            char letraAtual = palavraSecreta[contador];
-
-                            if (chute == letraAtual)
-                            {
-                                letrasEncontradas[contador] = letraAtual;
-                                letraFoiEncontrada = true;
-                            }
-                        }
-
-                        if (letraFoiEncontrada == false)
-                        {
-                            quantidadeErros++;
-                        }
-
-                        palavra = String.Join("", letrasEncontradas);
-                        letrasChutadas[tentativa] = chute;
-                    }
-
-                    jogadorAcertou = palavra == palavraSecreta || palavraFoiEncontrada == true;
-                    jogadorEnforcou = quantidadeErros > 5;
-
-                    if (jogadorAcertou)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("----------------------------");
-                        Console.WriteLine($"Você acertou a palavra secreta '{palavraSecreta}'");
-                        Console.WriteLine("----------------------------");
-                    }
-                    else if (jogadorEnforcou)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("___________        ");
-                        Console.WriteLine("|/        |        ");
-                        Console.WriteLine("|        (_)       ");
-                        Console.WriteLine("|         |        ");
-                        Console.WriteLine(@"|        /|\       ");
-                        Console.WriteLine(@"|       / | \      ");
-                        Console.WriteLine(@"|        / \       ");
-                        Console.WriteLine(@"|       /   \      ");
-                        Console.WriteLine("|____              ");
-                        Console.WriteLine("\n----------------------------");
-                        Console.WriteLine("Você perdeu! A palavra era: " + palavraSecreta);
-                        Console.WriteLine("----------------------------");
-                    }
-
-                    tentativa++;
-
-                } while (jogadorAcertou == false && jogadorEnforcou == false);
-
-                Console.Write("\nPressione qualquer tecla para jogar novamente...");
-                Console.ReadLine();
             }
+        }
+
+        static void ApresentarCabecalhoJogo(Jogo jogo, Categoria categoria)
+        {
+            char[] letrasEncontradas = new char[jogo.palavraSecreta.Length];
+
+            Console.WriteLine($"Categoria: {categoria.nome}");
+            Console.WriteLine("----------------------------");
+            Console.WriteLine("Erros: " + jogo.qtdErros);
+            Console.WriteLine("----------------------------");
+            Console.Write("Letras chutadas: ");
+
+            for (int i = 0; i < jogo.letrasChutadas[i]; i++)
+            {
+                if (jogo.letrasChutadas[i] != '\0')
+                {
+                    char letra = jogo.letrasChutadas[i];
+                    Console.Write(letra + " ");
+                }
+            }
+
+            for (int i = 0; i < jogo.palavraSecreta.Length; i++)
+            {
+                if (jogo.letrasEncontradas[i] != '\0')
+                {
+                    letrasEncontradas[i] = jogo.letrasEncontradas[i];
+                }
+                else
+                {
+                    letrasEncontradas[i] = '_';
+                }
+            }
+
+            string palavra = String.Join(" ", letrasEncontradas);
+
+            Console.WriteLine("\n----------------------------");
+            Console.WriteLine("Palavra secreta: " + palavra);
+            Console.WriteLine("----------------------------");
+        }
+
+        static string Chute(Jogo jogo)
+        {
+            Console.Write("\nDigite uma letra ou palavra: ");
+            string chute = Console.ReadLine();
+
+            while (jogo.LetraRepetida(chute))
+            {
+                Console.Write("\nVocê já chutou essa! Digite outra letra: ");
+                chute = Console.ReadLine();
+            }
+            return chute;
+        }
+
+        static void ApresentarMensagemVitoria(Jogo jogo)
+        {
+            Console.Clear();
+            Console.WriteLine("----------------------------");
+            Console.WriteLine($"Você acertou a palavra secreta '{jogo.palavraSecreta}'");
+            Console.WriteLine("----------------------------");
+        }
+
+        static void ApresentarMensagemDerrota(Jogo jogo, Forca forca)
+        {
+            forca.Desenhar(jogo);
+        }
+
+        static bool JogarNovamente()
+        {
+            Console.WriteLine("1- Jogar novamente");
+            Console.WriteLine("2- Sair\n");
+
+            string opcaoEscolhida = Console.ReadLine();
+
+            if (opcaoEscolhida == "1")
+                return true;
+            else
+                return false;
         }
     }
 }
