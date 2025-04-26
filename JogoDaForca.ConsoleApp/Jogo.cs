@@ -80,7 +80,7 @@
             }
         }
 
-        public bool JogadorAcertou(Forca forca)
+        public bool JogadorAcertou()
         {
             string palavra = String.Join("", letrasEncontradas);
 
@@ -89,7 +89,7 @@
             return false;
         }
 
-        public bool JogadorPerdeu(Forca forca)
+        public bool JogadorPerdeu()
         {
             if (qtdErros > qtdTotalErros)
                 return true;

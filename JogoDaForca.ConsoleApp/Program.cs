@@ -25,14 +25,16 @@
                     forca.Desenhar(jogo);
                     string chute = Chute(jogo);
                     jogo.VerificarChute(chute);
-                    if (jogo.JogadorAcertou(forca))
+                    if (jogo.JogadorAcertou())
                     {
                         ApresentarMensagemVitoria(jogo);
                         break;
                     }
-                    else if (jogo.JogadorPerdeu(forca))
+                    else if (jogo.JogadorPerdeu())
                     {
-                        ApresentarMensagemDerrota(jogo, forca);
+                        Console.Clear();
+                        forca.Desenhar(jogo);
+                        ApresentarMensagemDerrota(jogo);
                         break;
                     }
                 }
@@ -147,9 +149,11 @@
             Console.WriteLine("----------------------------");
         }
 
-        static void ApresentarMensagemDerrota(Jogo jogo, Forca forca)
+        static void ApresentarMensagemDerrota(Jogo jogo)
         {
-            forca.Desenhar(jogo);
+            Console.WriteLine("\n----------------------------");
+            Console.WriteLine("Você perdeu! A palavra era: " + jogo.palavraSecreta);
+            Console.WriteLine("----------------------------");
         }
 
         static bool JogarNovamente()

@@ -5,94 +5,111 @@
         public void Desenhar(Jogo jogo)
         {
             if (jogo.qtdErros == 0)
-            {
-                Console.WriteLine("___________        ");
-                Console.WriteLine("|/        |        ");
-                Console.WriteLine("|                  ");
-                Console.WriteLine("|                  ");
-                Console.WriteLine(@"|                 ");
-                Console.WriteLine(@"|                 ");
-                Console.WriteLine(@"|                 ");
-                Console.WriteLine(@"|                 ");
-                Console.WriteLine("|____              ");
-            }
-
+                DesenhoInicial();
             else if (jogo.qtdErros == 1)
-            {
-                Console.WriteLine("___________        ");
-                Console.WriteLine("|/        |        ");
-                Console.WriteLine("|        (_)       ");
-                Console.WriteLine("|                  ");
-                Console.WriteLine(@"|                  ");
-                Console.WriteLine(@"|                  ");
-                Console.WriteLine(@"|                  ");
-                Console.WriteLine(@"|                  ");
-                Console.WriteLine("|____              ");
-            }
+                DesenhoCabeca();
             else if (jogo.qtdErros == 2)
-            {
-                Console.WriteLine("___________        ");
-                Console.WriteLine("|/        |        ");
-                Console.WriteLine("|        (_)       ");
-                Console.WriteLine("|         |        ");
-                Console.WriteLine(@"|         |       ");
-                Console.WriteLine(@"|         |       ");
-                Console.WriteLine(@"|                 ");
-                Console.WriteLine(@"|                 ");
-                Console.WriteLine("|____              ");
-            }
+                DesenhoCorpo();
             else if (jogo.qtdErros == 3)
-            {
-                Console.WriteLine("___________        ");
-                Console.WriteLine("|/        |        ");
-                Console.WriteLine("|        (_)       ");
-                Console.WriteLine("|         |        ");
-                Console.WriteLine(@"|         |\       ");
-                Console.WriteLine(@"|         | \      ");
-                Console.WriteLine(@"|                  ");
-                Console.WriteLine(@"|                  ");
-                Console.WriteLine("|____              ");
-            }
+                DesenhoBraco1();
             else if (jogo.qtdErros == 4)
-            {
-                Console.WriteLine("___________        ");
-                Console.WriteLine("|/        |        ");
-                Console.WriteLine("|        (_)       ");
-                Console.WriteLine("|         |        ");
-                Console.WriteLine(@"|        /|\       ");
-                Console.WriteLine(@"|       / | \      ");
-                Console.WriteLine(@"|                  ");
-                Console.WriteLine(@"|                  ");
-                Console.WriteLine("|____              ");
-            }
+                DesenhoBraco2();
             else if (jogo.qtdErros == 5)
-            {
-                Console.WriteLine("___________        ");
-                Console.WriteLine("|/        |        ");
-                Console.WriteLine("|        (_)       ");
-                Console.WriteLine("|         |        ");
-                Console.WriteLine(@"|        /|\       ");
-                Console.WriteLine(@"|       / | \      ");
-                Console.WriteLine(@"|        /         ");
-                Console.WriteLine(@"|       /          ");
-                Console.WriteLine("|____              ");
-            }
+                DesenhoPerna1();
             else
-            {
-                Console.Clear();
-                Console.WriteLine("___________        ");
-                Console.WriteLine("|/        |        ");
-                Console.WriteLine("|        (_)       ");
-                Console.WriteLine("|         |        ");
-                Console.WriteLine(@"|        /|\       ");
-                Console.WriteLine(@"|       / | \      ");
-                Console.WriteLine(@"|        / \       ");
-                Console.WriteLine(@"|       /   \      ");
-                Console.WriteLine("|____              ");
-                Console.WriteLine("\n----------------------------");
-                Console.WriteLine("Você perdeu! A palavra era: " + jogo.palavraSecreta);
-                Console.WriteLine("----------------------------");
-            }
+                DesenhoEnforcamento();
+        }
+
+        public void DesenhoInicial()
+        {
+            Console.WriteLine(@"___________        ");
+            Console.WriteLine(@"|/        |        ");
+            Console.WriteLine(@"|                  ");
+            Console.WriteLine(@"|                  ");
+            Console.WriteLine(@"|                 ");
+            Console.WriteLine(@"|                 ");
+            Console.WriteLine(@"|                 ");
+            Console.WriteLine(@"|                 ");
+            Console.WriteLine(@"|____              ");
+        }
+
+        public void DesenhoCabeca()
+        {
+            Console.WriteLine(@"___________        ");
+            Console.WriteLine(@"|/        |        ");
+            Console.WriteLine(@"|        (_)       ");
+            Console.WriteLine(@"|                  ");
+            Console.WriteLine(@"|                  ");
+            Console.WriteLine(@"|                  ");
+            Console.WriteLine(@"|                  ");
+            Console.WriteLine(@"|                  ");
+            Console.WriteLine(@"|____              ");
+        }
+
+        public void DesenhoCorpo()
+        {
+            Console.WriteLine(@"___________       ");
+            Console.WriteLine(@"|/        |       ");
+            Console.WriteLine(@"|        (_)      ");
+            Console.WriteLine(@"|         |       ");
+            Console.WriteLine(@"|         |       ");
+            Console.WriteLine(@"|         |       ");
+            Console.WriteLine(@"|                 ");
+            Console.WriteLine(@"|                 ");
+            Console.WriteLine(@"|____             ");
+        }
+
+        public void DesenhoBraco1()
+        {
+            Console.WriteLine(@"___________        ");
+            Console.WriteLine(@"|/        |        ");
+            Console.WriteLine(@"|        (_)       ");
+            Console.WriteLine(@"|         |        ");
+            Console.WriteLine(@"|         |\       ");
+            Console.WriteLine(@"|         | \      ");
+            Console.WriteLine(@"|                  ");
+            Console.WriteLine(@"|                  ");
+            Console.WriteLine(@"|____              ");
+        }
+
+        public void DesenhoBraco2()
+        {
+            Console.WriteLine(@"___________        ");
+            Console.WriteLine(@"|/        |        ");
+            Console.WriteLine(@"|        (_)       ");
+            Console.WriteLine(@"|         |        ");
+            Console.WriteLine(@"|        /|\       ");
+            Console.WriteLine(@"|       / | \      ");
+            Console.WriteLine(@"|                  ");
+            Console.WriteLine(@"|                  ");
+            Console.WriteLine(@"|____              ");
+        }
+
+        public void DesenhoPerna1()
+        {
+            Console.WriteLine(@"___________        ");
+            Console.WriteLine(@"|/        |        ");
+            Console.WriteLine(@"|        (_)       ");
+            Console.WriteLine(@"|         |        ");
+            Console.WriteLine(@"|        /|\       ");
+            Console.WriteLine(@"|       / | \      ");
+            Console.WriteLine(@"|        /         ");
+            Console.WriteLine(@"|       /          ");
+            Console.WriteLine(@"|____              ");
+        }
+
+        public void DesenhoEnforcamento()
+        {
+            Console.Clear();
+            Console.WriteLine(@"___________        ");
+            Console.WriteLine(@"|/        |        ");
+            Console.WriteLine(@"|        (_)       ");
+            Console.WriteLine(@"|         |        ");
+            Console.WriteLine(@"|        /|\       ");
+            Console.WriteLine(@"|       / | \      ");
+            Console.WriteLine(@"|        / \       ");
+            Console.WriteLine(@"|       /   \      ");
+            Console.WriteLine(@"|____              ");
         }
     }
 }
