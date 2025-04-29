@@ -131,12 +131,12 @@
         static string Chute(Jogo jogo)
         {
             Console.Write("\nDigite uma letra ou palavra: ");
-            string chute = Console.ReadLine();
+            string chute = Console.ReadLine().ToUpper();
 
             while (jogo.LetraRepetida(chute))
             {
                 Console.Write("\nVocê já chutou essa! Digite outra letra: ");
-                chute = Console.ReadLine();
+                chute = Console.ReadLine().ToUpper();
             }
             return chute;
         }
